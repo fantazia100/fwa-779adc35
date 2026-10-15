@@ -1,0 +1,83 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AE Motion Lab | הפקות פנטזיה</title><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/demos.css"><link rel="stylesheet" href="assets/fwa-theme.css"></head><body>
+<svg width="0" height="0" style="position:absolute"><filter id="goo"><feGaussianBlur stdDeviation="3"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -7"/></filter><filter id="rough"><feTurbulence baseFrequency=".05" numOctaves="2"/><feDisplacementMap in="SourceGraphic" scale="20"/></filter></svg>
+<header class="hero"><div class="brand">FANTAZIA PRODUCTIONS</div><h1>מעבדת המושן <span>AE Motion Lab</span></h1>
+<p>ספריית פרומפטים ומודבורד חי לאנימציות טקסט, מעברים ומושן גרפיקס, בלי לפתוח After Effects. כל כרטיס: הדגמה חיה, הסבר פשוט ו-3 פרומפטים ל-Claude שבונה את האנימציה בעצמו בקוד (Artifact, Remotion או Lottie) ומוכנה להפוך לוידאיו.</p>
+<div class="stats"><b id="tot"></b> סגנונות · <b id="ncat"></b> קטגוריות · 3 עמודים</div>
+<nav class="toc"><a href="#lib">הספרייה</a><a href="#run">מפרומפט לוידאיו</a><a href="#builder">בונה פרומפטים</a><a href="#recipes">מתכונים</a><a href="#mods">מודיפיירים</a><a href="#fix">תיקון וייצוא</a><a href="#typo">טייפוגרפיה</a><a href="#master">פרומפט מאסטר</a><a href="#ease">איזינג ותזמון</a><a href="#rtl">טיפים לעברית</a><a href="#gloss">מילון מונחים</a></nav></header>
+<main>
+<section id="lib"><div class="bar">
+<div class="pills"><button class="pill on" data-p="all">הכל</button><button class="pill" data-p="T">אנימציות טקסט</button><button class="pill" data-p="X">מעברים</button><button class="pill" data-p="M">מושן גרפיקס</button></div>
+<div class="filters"><input id="q" placeholder="חיפוש: ניאון, glitch, לוגו..."><select id="cat"></select><select id="mood"></select>
+<select id="diff"><option value="all">כל הרמות</option><option value="1">● קל</option><option value="2">●● בינוני</option><option value="3">●●● מתקדם</option></select>
+<label class="fo"><input type="checkbox" id="favOnly"> ★ מועדפים בלבד</label><span id="count"></span></div></div>
+<div id="grid"></div></section>
+
+<section id="run" class="doc"><h2>איך עובדים: מפרומפט לוידאיו, בלי After Effects</h2><ol>
+<li><b>בוחרים סגנון</b> בספרייה, או בונים פרומפט משולב ב<a href="#builder">בונה הפרומפטים</a>.</li>
+<li><b>ממלאים את הסוגריים המרובעים</b>: טקסט, צבעים, גופן, משך ויחס מסך (16:9 ליוטיוב, 9:16 לרילס וטיקטוק, 1:1 לפיד).</li>
+<li><b>מדביקים ב-Claude</b> (claude.ai). Claude כותב קובץ HTML, והוא נפתח בצד כ-<b>Artifact</b>: חלון תצוגה שבו האנימציה כבר רצה.</li>
+<li><b>משפרים בשיחה</b>: "יותר איטי", "הצבע הוורוד חזק מדי", "הטקסט חתוך בצד ימין". כל תיקון יוצר גרסה חדשה, ואפשר לחזור לגרסה קודמת.</li>
+<li><b>הופכים לוידאיו</b>, באחת משלוש דרכים:
+<ul><li><b>הקלטת מסך</b> (הכי פשוט): מסך מלא על ה-Artifact, ואז ב-Windows: Win+Alt+R (Xbox Game Bar) או OBS; במק: Cmd+Shift+5. חותכים בעורך הוידאיו.</li>
+<li><b>כפתור "הקלט וידאיו"</b> שהפרומפטים מבקשים: הדפדפן מקליט את האנימציה (MediaRecorder) ומוריד קובץ webm. ממירים ל-MP4 ב-CapCut או בכלי המרה.</li>
+<li><b>Remotion</b> (גרסת "מתקדם"): Claude כותב קוד React, ומריצים <code>npx remotion render</code> ומקבלים MP4 מדויק בכל רזולוציה. דורש התקנת Node.js פעם אחת, ו-Claude יסביר צעד אחר צעד.</li></ul></li>
+<li><b>לשכבה מעל וידאיו</b>: בקשו רקע ירוק (#00FF00) והסירו אותו ב-CapCut או Premiere (Chroma Key), או בקשו מ-Remotion ייצוא עם שקיפות (ProRes 4444 / WebM).</li></ol>
+<h3>בעיות נפוצות</h3><table>
+<tr><td>העברית הפוכה או מפורקת</td><td>"וודא dir=rtl ופיצול עם Array.from, ותתחיל את האנימציה מימין."</td></tr>
+<tr><td>הניקוד בורח מהאותיות</td><td>"אנימציה לפי מילים ולא לפי אותיות."</td></tr>
+<tr><td>ה-Artifact ריק או לבן</td><td>הדביקו ל-Claude: "ה-Artifact ריק, תבדוק שגיאות JavaScript ותשלח קובץ מלא."</td></tr>
+<tr><td>הגופן לא נטען</td><td>"טען את הגופן מ-Google Fonts עם display=swap והמתן ל-document.fonts.ready לפני שהאנימציה מתחילה."</td></tr>
+<tr><td>ההקלטה מקוטעת</td><td>סגרו לשוניות אחרות, או עברו ל-Remotion לרינדור מדויק.</td></tr>
+<tr><td>הטקסט חתוך במובייל</td><td>"התאם את גודל הטקסט לרוחב הבמה (fit text) והשאר שוליים בטוחים 8%."</td></tr></table>
+<p class="note">מונחי AE בכרטיסים ובמילון נשארו כאוצר מילים: הם עוזרים לתאר ל-Claude בדיוק מה רוצים ("Track Matte", "Trim Paths", "Overshoot").</p></section>
+
+<section id="builder" class="doc wide"><h2>בונה פרומפטים</h2><div class="bld">
+<label>סגנון ראשי<select id="bStyle"></select></label><label>סגנון שני (לרצף, אופציונלי)<select id="bStyle2"></select></label>
+<label>מעבר בין סצנות<select id="bTr"></select></label><label>יחס מסך<select id="bAsp"><option>16:9</option><option>9:16</option><option>1:1</option><option>4:5</option></select></label>
+<label>טקסט<input id="bText" value="הפקות פנטזיה"></label><label>טקסט משני<input id="bSub" value="שחקנית · במאית · יוצרת"></label>
+<label>משך (שניות)<input id="bDur" type="number" value="6" min="1"></label><label>טייפוגרפיה<select id="bTypo"></select></label>
+<label>פלטה<select id="bPal"></select></label><label>פורמט פלט<select id="bOut"><option>Artifact (HTML + GSAP)</option><option>Canvas + הקלטת webm</option><option>Remotion (MP4)</option><option>Lottie JSON</option></select></label></div>
+<div id="bMods"></div><pre id="bRes"></pre><button class="cpy2">העתק פרומפט משולב</button></section>
+
+<section id="recipes" class="doc"><h2>מתכונים לוידאיו מלא, מרובה סצנות</h2><div id="rec"></div></section>
+<section id="mods" class="doc"><h2>בנק מודיפיירים לפרומפט</h2><p>משפטים קצרים שמוסיפים לכל פרומפט. לחיצה מעתיקה.</p><div id="mb"></div></section>
+<section id="fix" class="doc"><h2>פרומפטים לשיפור, תיקון וייצוא</h2><div id="fx"></div></section>
+<section id="typo" class="doc"><h2>פריסטים לטייפוגרפיה עברית</h2><div id="tp" class="tpg"></div></section>
+
+<section id="master" class="doc"><h2>תבנית פרומפט מאסטר</h2><p>לכל רעיון שלא מופיע בספרייה. מחליפים את מה שבסוגריים.</p>
+<pre>אתה מעצב מושן ומפתח קריאייטיב. בנה בעצמך בקוד אנימציה של: [תיאור הסגנון והתחושה].
+רפרנס: [סרט / קליפ / מותג]. תחושה: [אלגנטי / אנרגטי / רטרו].
+פרמטרים בראש הקוד: TEXT="[טקסט]", COLORS={main:"#c2276a", accent:"#ff5c9d", gold:"#d4af37", bg:"#0b0709"},
+FONT="[Heebo]", ASPECT="[16:9 / 9:16 / 1:1]", DURATION=[6].
+מבנה זמן: כניסה [0-1 ש'], החזקה [1-5], יציאה [5-6]. Easing: power3.out, בלי תנועה לינארית.
+עברית: dir="rtl", פיצול עם Array.from, אנימציה מתחילה מימין, מספרים ב-&lt;bdi&gt;, המתן ל-document.fonts.ready.
+פלט: קובץ HTML אחד (GSAP מ-CDN) שרץ כ-Artifact, עם כפתור נגן מחדש וכפתור "הקלט וידאיו" (MediaRecorder ל-webm).
+אופציונלי: גרסת Remotion עם props להרצת npx remotion render ל-MP4.
+אני לא מתכנתת: הקוד חייב לעבוד בלי עריכה. בסוף הסבר בעברית פשוטה איך משנים טקסט, צבע ומהירות.</pre><button class="cpy2">העתק</button></section>
+<section id="ease" class="doc"><h2>שליף איזינג ותזמון</h2><div class="eg">
+<div><i class="e1"></i><b>Linear</b> לינארי: מכני. לפסי חדשות, לופים וגלילה.</div>
+<div><i class="e2"></i><b>Easy Ease (F9)</b> נכנס ויוצא ברכות. ברירת מחדל טובה.</div>
+<div><i class="e3"></i><b>Ease Out חזק</b> מהיר בהתחלה ונעצר רך. לכניסות טקסט מודרניות.</div>
+<div><i class="e4"></i><b>Overshoot / Bounce</b> עובר את היעד וחוזר. למשחקי וסושיאל.</div>
+<div><i class="e5"></i><b>Hold</b> קפיצה בלי מעבר. לגליץ', ברוטליזם ובויל.</div></div>
+<table><tr><td>כניסת טקסט</td><td>0.4-0.8 שניות</td></tr><tr><td>עיכוב בין אותיות</td><td>1-3 פריימים</td></tr><tr><td>עיכוב בין מילים</td><td>3-6 פריימים</td></tr><tr><td>מעבר מהיר (whip / zoom)</td><td>6-12 פריימים</td></tr><tr><td>זמן קריאה</td><td>בערך 3 מילים לשנייה + שנייה</td></tr><tr><td>לואר ת'רד על המסך</td><td>4-6 שניות</td></tr><tr><td>תנועה "פרימיום"</td><td>expo.out או power4.out, משך 0.8-1.2 שניות</td></tr><tr><td>Motion Blur מדומה</td><td>filter: blur לפי מהירות, כבו לגליץ' ובויל</td></tr></table>
+<pre>// מילים שאפשר לכתוב ל-Claude (שמות GSAP)
+linear  |  power1.inOut (רך)  |  power3.out (כניסה מודרנית)
+expo.out (חד ויוקרתי)  |  back.out(1.7) (overshoot)
+elastic.out(1, 0.4) (קפיצי)  |  steps(4) (Hold, גליץ')
+Remotion: spring({frame, fps, config:{damping:12}})</pre></section>
+
+<section id="rtl" class="doc"><h2>טיפים לעברית RTL בקוד</h2><ul>
+<li>dir="rtl" ו-lang="he" על הבמה, ויישור לימין או למרכז.</li>
+<li>פיצול לאותיות: Array.from(text) או Intl.Segmenter, כך שהניקוד נשאר צמוד לאות.</li>
+<li>Stagger מימין: ב-GSAP stagger:{from:"start"} ב-RTL מתחיל מימין כשהסדר ב-DOM נכון. אם זה הפוך, בקשו from:"end".</li>
+<li>עם ניקוד: אנימציה לפי מילים ולא לפי אותיות, ובלי letter-spacing.</li>
+<li>מספרים ואנגלית בתוך עברית: עטיפה ב-&lt;bdi&gt; או שכבה נפרדת.</li>
+<li>ב-Canvas: ctx.direction="rtl" ו-textAlign="right".</li>
+<li>המתינו ל-document.fonts.ready לפני האנימציה, אחרת הגופן מתחלף באמצע.</li>
+<li>וידאיו אנכי: אזור בטוח של 250px מלמעלה ומלמטה (ממשק של רילס וטיקטוק).</li></ul></section>
+
+<section id="gloss" class="doc"><h2>מילון מונחים (אוצר מילים לפרומפטים)</h2><p>מונחי After Effects ומושן שכדאי להכיר כדי לתאר ל-Claude מה רוצים. לא צריך לפתוח את התוכנה.</p><dl id="gl"></dl></section>
+</main><footer>נבנה עבור הפקות פנטזיה · כל התוכן נכתב מחדש ואינו מבוסס על קורסים בתשלום · מבוסס מחקר מגמות 2026 (Adobe Help, Olaf Motion, Envato)</footer>
+<script src="assets/data.js"></script><script src="assets/glossary.js"></script><script src="assets/app.js"></script><script src="assets/extra.js"></script></body></html>
