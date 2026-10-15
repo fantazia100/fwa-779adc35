@@ -61,7 +61,8 @@ function demo(it){
  'nm-steps':rnd(3,i=>`<div style="animation-delay:${i*.5}s"><b>${i+1}</b> שלב ${['ראשון','שני','שלישי'][i]}</div>`),
  'nm-ease':'<svg viewBox="0 0 120 80" class="full m-svg"><path d="M10 70 C60 70 60 10 110 10"/></svg><i></i>','nm-princ':'<i></i><s></s>',
  'nm-tip':'<div class="card"><b>#7</b> שמרו על easing חלק</div>','nm-tpl':rnd(6,i=>`<i style="animation-delay:${i*.2}s"></i>`),
- 'nm-orbs':'<i></i><i></i><i></i><span>רקע</span>','nm-stick':['😍','⭐','חדש!'].map((s,i)=>`<i style="animation-delay:${i*.3}s">${s}</i>`).join('')});
+ 'nm-orbs':'<i></i><i></i><i></i><span>רקע</span>',
+ 'nm-slate':'<div class="sc s1"><div class="ph"><b>פנטזיה</b></div></div><div class="sc s2"><i class="cb3"></i>'+[...'מושן'].map((c,i)=>`<span style="--a:${i*90+20}deg">${c}</span>`).join('')+'</div><div class="sc s3">'+['וידאיו','יצירה','קצב'].map((w,i)=>`<em style="--i:${i}">${w}</em>`).join('')+'</div><div class="sc s4"><b>פנטזיה</b><b>מושן</b></div><div class="sc s5"><u></u>'+'<i></i>'.repeat(6)+'<b>פנטזיה</b></div>','nm-stick':['😍','⭐','חדש!'].map((s,i)=>`<i style="animation-delay:${i*.3}s">${s}</i>`).join('')});
  let inner=T[d]??`<span>${t}</span>`;
  return `<div class="demo ${it.p=='M'||['trim','icon','check','pie','linegraph','timeline','route','connect','flow','arrow'].includes(d)?'m-'+d:'k-'+d}">${inner}</div>`;
 }
@@ -74,7 +75,7 @@ const BASE=`פרמטרים (משתנים ברורים בראש הקוד):
 const OUT=`פורמט פלט: קובץ HTML אחד עצמאי (HTML+CSS+JS, GSAP מ-CDN או Canvas) שרץ כ-Artifact. במה בגודל ה-ASPECT שמותאמת לחלון (scale), רקע COLORS.bg, ולופ אוטומטי.
 הוסף פאנל קטן: כפתור "נגן מחדש", כפתור "הקלט וידאיו" שמשתמש ב-canvas.captureStream + MediaRecorder ומוריד קובץ webm (אם הבמה DOM, השתמש ב-Canvas לציור או הסבר לי להקליט מסך), ושדות לעריכת TEXT וצבעים בזמן אמת.
 בסוף התשובה: 3 שורות בעברית פשוטה איך משנים טקסט, צבע ומהירות.`;
-function prompts(it){
+function prompts(it){if(it.px){const o={};for(const k in it.px)o[k]=it.px[k].replace('{BASE}',BASE).replace('{OUT}',OUT);return o}
  const h=`אתה מעצב מושן ומפתח קריאייטיב. בנה בעצמך בקוד אנימציה בסגנון "${it.en}" (${it.he}).
 הרעיון: ${it.desc}
 השראה מטכניקות AE (רק כרפרנס חזותי, אני לא פותחת After Effects): ${it.tools}.`;
@@ -84,11 +85,11 @@ function prompts(it){
  'רצף':`${h}\nבנה רצף של 3 סצנות ב-${'${DURATION}'} שניות: סצנה 1 בסגנון ${it.he}, מעבר [סגנון מעבר, למשל וויפ עיגול / וויפ פאן], סצנה 2 [סגנון שני מהספרייה], ובסוף סגנון סיום [לוגו / קריאה לפעולה].\nכל סצנה פונקציה נפרדת שמחזירה Timeline, ו-master timeline שמחבר אותן; טקסט נפרד לכל סצנה (TEXT_1, TEXT_2, TEXT_3). אפשרות לסנכרן לפעימות: BPM = [120], כל כניסה על פעימה.\n\n${BASE}\n\n${OUT}`};}
 function prompt(it){return prompts(it)['בסיסי']}
 const FAV=new Set(JSON.parse(localStorage.getItem('aeFav')||'[]'));
-function card(it){return `<article class="card" data-id="${it.id}">
+function card(it){return `<article class="card" id="s-${it.demo}" data-id="${it.id}">
  ${demo(it)}
  <div class="cb"><div class="tags"><span class="tg p${it.p}">${PIL[it.p]}</span><span class="tg">${it.cat}</span><span class="tg">${it.mood}</span><span class="tg d">${'●'.repeat(it.diff)}${'○'.repeat(3-it.diff)}</span></div>
  <button class="fav ${FAV.has(it.id)?'on':''}" title="מועדף">★</button>
- <h3>${it.he}</h3><div class="en">${it.en}</div>${it.credit?`<div class="credit">בהשראת <bdi>${it.credit}</bdi></div><div class="refrow"><a class="ref" href="https://www.instagram.com/${it.credit.slice(1)}/" target="_blank" rel="noopener">רפרנס ↗</a></div><video class="vid" src="videos/${it.demo}.mp4#t=1.2" muted loop playsinline preload="metadata"></video>`:''}<p>${it.desc}</p>
+ <h3>${it.he}</h3><div class="en">${it.en}</div>${it.credit?`<div class="credit">בהשראת <bdi>${it.credit}</bdi></div><div class="refrow"><a class="ref" href="${it.ref||'https://www.instagram.com/'+it.credit.slice(1)+'/'}" target="_blank" rel="noopener">${it.refLabel||'רפרנס'} ↗</a></div><video class="vid" src="videos/${it.demo}.mp4#t=1.2" muted loop playsinline preload="metadata"></video>`:''}<p>${it.desc}</p>
  <div class="tools"><b>כלים ב-AE:</b> ${it.tools}</div><div class="vars"><b>וריאציות:</b> ${it.vars}</div>
  <details><summary>3 פרומפטים ל-Claude (בסיסי / מתקדם / רצף)</summary>${Object.entries(prompts(it)).map(([k,v])=>`<div class="pv"><b>${k}</b><pre>${v.replace(/</g,'&lt;')}</pre><button class="cpy2">העתק ${k}</button></div>`).join('')}</details>
  <button class="copy">העתק פרומפט בסיסי</button></div></article>`;}
@@ -109,6 +110,7 @@ $('#mood').innerHTML='<option value="all">כל המצבים</option>'+[...new Se
 ['T','X','M'].forEach(p=>document.querySelector(`[data-p="${p}"]`).textContent+=` (${ITEMS.filter(i=>i.p==p).length})`);
 $('#tot').textContent=ITEMS.length;$('#ncat').textContent=new Set(ITEMS.map(i=>i.p+i.cat)).size;
 fillCats();render();
+if(location.hash){const el=document.getElementById(location.hash.slice(1));el&&setTimeout(()=>el.scrollIntoView({block:'center'}),300)}
 
 document.addEventListener('mouseover',e=>{const v=e.target.closest('.card')?.querySelector('.vid');if(v&&v.paused)v.play().catch(()=>{})});
 document.addEventListener('mouseout',e=>{const c=e.target.closest('.card');if(c&&!c.contains(e.relatedTarget)){const v=c.querySelector('.vid');v&&v.pause()}});
