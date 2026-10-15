@@ -88,7 +88,7 @@ function card(it){return `<article class="card" data-id="${it.id}">
  ${demo(it)}
  <div class="cb"><div class="tags"><span class="tg p${it.p}">${PIL[it.p]}</span><span class="tg">${it.cat}</span><span class="tg">${it.mood}</span><span class="tg d">${'●'.repeat(it.diff)}${'○'.repeat(3-it.diff)}</span></div>
  <button class="fav ${FAV.has(it.id)?'on':''}" title="מועדף">★</button>
- <h3>${it.he}</h3><div class="en">${it.en}</div>${it.credit?`<div class="credit">בהשראת <bdi>${it.credit}</bdi></div><div class="refrow"><a class="ref" href="https://www.instagram.com/${it.credit.slice(1)}/" target="_blank" rel="noopener">רפרנס ↗</a></div><video class="vid" src="videos/${it.demo}.mp4" muted loop playsinline preload="none" poster=""></video>`:''}<p>${it.desc}</p>
+ <h3>${it.he}</h3><div class="en">${it.en}</div>${it.credit?`<div class="credit">בהשראת <bdi>${it.credit}</bdi></div><div class="refrow"><a class="ref" href="https://www.instagram.com/${it.credit.slice(1)}/" target="_blank" rel="noopener">רפרנס ↗</a></div><video class="vid" src="videos/${it.demo}.mp4#t=1.2" muted loop playsinline preload="metadata"></video>`:''}<p>${it.desc}</p>
  <div class="tools"><b>כלים ב-AE:</b> ${it.tools}</div><div class="vars"><b>וריאציות:</b> ${it.vars}</div>
  <details><summary>3 פרומפטים ל-Claude (בסיסי / מתקדם / רצף)</summary>${Object.entries(prompts(it)).map(([k,v])=>`<div class="pv"><b>${k}</b><pre>${v.replace(/</g,'&lt;')}</pre><button class="cpy2">העתק ${k}</button></div>`).join('')}</details>
  <button class="copy">העתק פרומפט בסיסי</button></div></article>`;}
