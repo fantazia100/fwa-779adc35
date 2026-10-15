@@ -50,6 +50,18 @@ function demo(it){
  flow:'<svg viewBox="0 0 200 60" class="full m-svg"><path d="M10 20h40v20H10z M80 20h40v20H80z M150 20h40v20h-40z"/><path class="g" d="M50 30h30 M120 30h30"/></svg>',
  circlehl:'<span style="font-size:22px">זה <b style="position:relative">חשוב<svg viewBox="0 0 100 50" style="position:absolute;inset:-12px -16px;width:calc(100% + 32px);height:calc(100% + 24px)" class="m-svg"><ellipse cx="50" cy="25" rx="46" ry="21" style="fill:none;stroke:#d4af37;stroke-width:3;stroke-dasharray:400;animation:dr 3s infinite"/></svg></b></span>',
  arrow:'<svg viewBox="0 0 100 60" class="full m-svg" style="animation:wv 1s infinite"><path d="M80 30 H20 M35 15 L20 30 L35 45"/></svg>'};
+ Object.assign(T,{'nf-clean':`<div>${['פשוט','ונקי'].map((w,i)=>`<span class="c" style="animation-delay:${i*.35}s;margin:0 6px">${w}</span>`).join('')}</div>`,
+ 'nf-bold':'<span>עכשיו</span><i></i>','nf-play':[...'פנטזיה'].map((c,i)=>`<span class="c" style="color:${['#ff5c9d','#ffd23f','#3ddc97','#4cc9f0','#b388ff','#ff8c42'][i%6]};animation-delay:${i*.1}s">${c}</span>`).join(''),
+ 'nf-mat':'<span>חומר</span>','nf-exp':'<span>ניסוי</span>','nf-id':'<span class="a">פנ</span><span class="b">טזיה</span>','nf-grad':'<span>תל אביב</span>',
+ 'nx-spin':'<div class="sa">סצנה א</div><div class="sb">סצנה ב</div>','nx-punch':'<div class="sa">סצנה א<i></i></div><div class="sb">סצנה ב</div>',
+ 'nx-obj':'<div class="sa">סצנה א</div><div class="sb">סצנה ב</div><i></i>','nx-film':'<div class="sa">סצנה א</div><div class="sb">סצנה ב</div><i></i>',
+ 'nx-stack':'<div class="sa">סצנה א</div><div class="sb">סצנה ב</div><i></i><i></i><i></i>',
+ 'nm-pink':'<i></i><i></i><i></i><b>✦</b>','nm-loop':rnd(6,i=>`<i style="transform:rotate(${i*60}deg) translateY(-40px);background:${['#ff5c9d','#ffd23f','#3ddc97','#4cc9f0','#b388ff','#ff8c42'][i]}"></i>`),
+ 'nm-bts':'<i class="w"></i><i class="f"></i><b></b>','nm-fun':'<i><b></b></i><s></s>','nm-rig':'<i></i><i></i><i></i>',
+ 'nm-steps':rnd(3,i=>`<div style="animation-delay:${i*.5}s"><b>${i+1}</b> שלב ${['ראשון','שני','שלישי'][i]}</div>`),
+ 'nm-ease':'<svg viewBox="0 0 120 80" class="full m-svg"><path d="M10 70 C60 70 60 10 110 10"/></svg><i></i>','nm-princ':'<i></i><s></s>',
+ 'nm-tip':'<div class="card"><b>#7</b> שמרו על easing חלק</div>','nm-tpl':rnd(6,i=>`<i style="animation-delay:${i*.2}s"></i>`),
+ 'nm-orbs':'<i></i><i></i><i></i><span>רקע</span>','nm-stick':['😍','⭐','חדש!'].map((s,i)=>`<i style="animation-delay:${i*.3}s">${s}</i>`).join('')});
  let inner=T[d]??`<span>${t}</span>`;
  return `<div class="demo ${it.p=='M'||['trim','icon','check','pie','linegraph','timeline','route','connect','flow','arrow'].includes(d)?'m-'+d:'k-'+d}">${inner}</div>`;
 }
@@ -76,12 +88,12 @@ function card(it){return `<article class="card" data-id="${it.id}">
  ${demo(it)}
  <div class="cb"><div class="tags"><span class="tg p${it.p}">${PIL[it.p]}</span><span class="tg">${it.cat}</span><span class="tg">${it.mood}</span><span class="tg d">${'●'.repeat(it.diff)}${'○'.repeat(3-it.diff)}</span></div>
  <button class="fav ${FAV.has(it.id)?'on':''}" title="מועדף">★</button>
- <h3>${it.he}</h3><div class="en">${it.en}</div><p>${it.desc}</p>
+ <h3>${it.he}</h3><div class="en">${it.en}</div>${it.credit?`<div class="credit">בהשראת <bdi>${it.credit}</bdi></div><div class="refrow"><a class="ref" href="https://www.instagram.com/${it.credit.slice(1)}/" target="_blank" rel="noopener">רפרנס ↗</a></div><video class="vid" src="videos/${it.demo}.mp4" muted loop playsinline preload="none" poster=""></video>`:''}<p>${it.desc}</p>
  <div class="tools"><b>כלים ב-AE:</b> ${it.tools}</div><div class="vars"><b>וריאציות:</b> ${it.vars}</div>
  <details><summary>3 פרומפטים ל-Claude (בסיסי / מתקדם / רצף)</summary>${Object.entries(prompts(it)).map(([k,v])=>`<div class="pv"><b>${k}</b><pre>${v.replace(/</g,'&lt;')}</pre><button class="cpy2">העתק ${k}</button></div>`).join('')}</details>
  <button class="copy">העתק פרומפט בסיסי</button></div></article>`;}
 let st={p:'all',cat:'all',mood:'all',diff:'all',q:'',fav:false};
-function render(){const L=ITEMS.filter(i=>(st.p=='all'||i.p==st.p)&&(st.cat=='all'||i.cat==st.cat)&&(st.mood=='all'||i.mood==st.mood)&&(st.diff=='all'||i.diff==st.diff)&&(!st.fav||FAV.has(i.id))&&(!st.q||(i.he+i.en+i.desc+i.tools+i.cat).toLowerCase().includes(st.q.toLowerCase())));
+function render(){const L=ITEMS.filter(i=>(st.p=='all'||i.p==st.p)&&(st.cat=='all'||i.cat==st.cat)&&(st.mood=='all'||i.mood==st.mood)&&(st.diff=='all'||i.diff==st.diff)&&(!st.fav||FAV.has(i.id))&&(!st.q||(i.he+i.en+i.desc+i.tools+i.cat+(i.credit||'')).toLowerCase().includes(st.q.toLowerCase())));
  $('#grid').innerHTML=L.map(card).join('')||'<p class="empty">לא נמצאו תוצאות</p>';$('#count').textContent=L.length+' מתוך '+ITEMS.length;scr();cnt();}
 function fillCats(){const c=[...new Set(ITEMS.filter(i=>st.p=='all'||i.p==st.p).map(i=>i.cat))];$('#cat').innerHTML='<option value="all">כל הקטגוריות</option>'+c.map(x=>`<option>${x}</option>`).join('');}
 function scr(){document.querySelectorAll('#sc').forEach(el=>{const f=el.dataset.final,A='אבגדהוזחטיכלמנסעפצקרשת';let n=0;clearInterval(el._t);el._t=setInterval(()=>{n=(n+1)%40;el.textContent=[...f].map((c,i)=>n>i*4+8?c:A[Math.random()*22|0]).join('')},70)})}
@@ -97,3 +109,7 @@ $('#mood').innerHTML='<option value="all">כל המצבים</option>'+[...new Se
 ['T','X','M'].forEach(p=>document.querySelector(`[data-p="${p}"]`).textContent+=` (${ITEMS.filter(i=>i.p==p).length})`);
 $('#tot').textContent=ITEMS.length;$('#ncat').textContent=new Set(ITEMS.map(i=>i.p+i.cat)).size;
 fillCats();render();
+
+document.addEventListener('mouseover',e=>{const v=e.target.closest('.card')?.querySelector('.vid');if(v&&v.paused)v.play().catch(()=>{})});
+document.addEventListener('mouseout',e=>{const c=e.target.closest('.card');if(c&&!c.contains(e.relatedTarget)){const v=c.querySelector('.vid');v&&v.pause()}});
+document.addEventListener('click',e=>{if(e.target.matches('.vid')){e.target.paused?e.target.play():e.target.pause()}});
